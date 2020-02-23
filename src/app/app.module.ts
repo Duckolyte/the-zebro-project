@@ -11,6 +11,19 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { ErrorPageComponent } from './page/error-page/error-page.component';
 import { MissionComponent } from './view/mission/mission.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatDatepickerModule, MatDividerModule,
+  MatFormFieldModule,
+  MatGridListModule,
+  MatInputModule,
+  MatNativeDateModule
+} from '@angular/material';
+import { AnimalObservationComponent } from './view/observation/animal-observation/animal-observation.component';
+import { ObservationActionComponent } from './view/observation/observation-action/observation-action.component';
 
 @NgModule({
   declarations: [
@@ -19,15 +32,30 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ZebraProfilComponent,
     DashboardComponent,
     ErrorPageComponent,
-    MissionComponent
+    MissionComponent,
+    AnimalObservationComponent,
+    ObservationActionComponent
   ],
   imports: [
     BrowserModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    FormsModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatDividerModule
   ],
-  providers: [],
+  providers: [
+    MatDatepickerModule
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

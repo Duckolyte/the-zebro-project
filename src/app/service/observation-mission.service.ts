@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ObservationMission} from '../model/mission/observation-mission';
 
 @Injectable({
@@ -13,9 +13,9 @@ export class ObservationMissionService {
     // @TODO
     //  here should be a HTTPS call to the backend that gets all missions or a query against the store (not implemented yet)
     // the store gets fed when the app starts up.
-    const dummyMission1 = new ObservationMission();
-    const dummyMission2 = new ObservationMission();
-    const dummyMission3 = new ObservationMission();
+    const dummyMission1 = new ObservationMission( 1, new Date(), []);
+    const dummyMission2 = new ObservationMission( 2, new Date(), []);
+    const dummyMission3 = new ObservationMission( 1, new Date(), []);
     this.updateAllMissions([dummyMission1, dummyMission2, dummyMission3]);
   }
 
@@ -41,14 +41,6 @@ export class ObservationMissionService {
     return this.selectedMission;
   }
 
-  createMission(mission: ObservationMission): bigint {
-    // @TODO
-    // store update with new mission
-    // e.g. store.getMissions().push(mission);
-    this.allMissions.push(mission);
-    return mission.getId();
-  }
-
   updateMission(mission: ObservationMission): void {
     // @TODO
     // get mission from store
@@ -68,5 +60,13 @@ export class ObservationMissionService {
     return mission.getId();
   }
 
+  storeObservationMission(observationMission: ObservationMission): ObservationMission {
+    this.allMissions.push(observationMission);
+    return observationMission;
+  }
+
+  createObservationMission() {
+    return new ObservationMission(1, new Date(), []);
+  }
 }
 
