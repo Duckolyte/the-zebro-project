@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {ParcSection} from '../../../model/mission/parc-section';
+import {Component, OnInit} from '@angular/core';
 import {ObservationQualityCode} from '../../../model/observation/observation-quality-code.enum';
 import {ObservationAction} from '../../../model/observation/observation-action';
+import {NavigationService} from '../../../service/navigation.service';
 
 @Component({
   selector: 'app-observation-action',
@@ -29,13 +29,17 @@ export class ObservationActionComponent implements OnInit {
   // Component properties
   private observationAction: ObservationAction;
 
-  constructor() { }
+  constructor(
+    private navigationService: NavigationService
+  ) { }
 
   ngOnInit() {
     this.observationAction = new ObservationAction();
   }
 
   commitObservationAction() {
-    throw new Error('Not yet implemented.');
+    // @TODO
+    // Store the observation action to the selected mission.
+    this.navigationService.navigateTo('mission');
   }
 }
