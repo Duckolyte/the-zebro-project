@@ -24,6 +24,7 @@ import {
 } from '@angular/material';
 import { AnimalObservationComponent } from './view/observation/animal-observation/animal-observation.component';
 import { ObservationActionComponent } from './view/observation/observation-action/observation-action.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ObservationActionComponent } from './view/observation/observation-actio
     MatInputModule,
     MatButtonToggleModule,
     MatButtonModule,
-    MatDividerModule
+    MatDividerModule,
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [
     MatDatepickerModule
