@@ -9,8 +9,8 @@ import {
 } from '../actions/mission.actions';
 import {throwError, of} from 'rxjs';
 import {catchError, concatMap, exhaustMap, filter, map, mergeMap, withLatestFrom} from 'rxjs/operators';
-import {CoursesService} from './services/courses.service';
-import {AppState} from '../reducers';
+import {ObservationMissionService} from '../../service/observation-mission.service';
+import {AppState} from '../index';
 import {select, Store} from '@ngrx/store';
 import {allMissionsLoaded} from '../selector/mission.selectors';
 
@@ -21,23 +21,22 @@ export class CourseEffects {
   loadCourse$ = this.actions$
     .pipe(
       ofType<MissionRequested>(MissionActionTypes.MISSION_REQUESTED),
-      mergeMap(action => this.missionService.findMissionById(action.payload.missionId)),
+      mergeMap(action => this.observationMissionService.findMissionById(action.payload.missionId)),
       map(mission => new MissionLoaded({mission}))
-
     );
 
   @Effect()
   loadAllCourses$ = this.actions$
     .pipe(
-      ofType<AllCoursesRequested>(CourseActionTypes.AllCoursesRequested),
-      withLatestFrom(this.store.pipe(select(allCoursesLoaded))),
-      filter(([action, allCoursesLoaded]) => !allCoursesLoaded),
-      mergeMap(() => this.coursesService.findAllCourses()),
-      map(courses => new AllCoursesLoaded({courses}))
+      ofType<AllMissionsLoaded>(MissionActionTypes.ALL_MISSIONS_REQUESTED),
+      withLatestFrom(this.store.pipe(select(allMissionsLoaded))),
+      filter(([action, allMissionsLoaded]) => !allMissionsLoaded),
+      mergeMap(() => this.observationMissionService.findAllMissions()),
+      map(missions => new AllMissionsLoaded({missions}))
     );
 
 
-  constructor(private actions$: Actions, private coursesService: CoursesService,
+  constructor(private actions$: Actions, private observationMissionService: ObservationMissionService,
               private store: Store<AppState>) {
 
   }

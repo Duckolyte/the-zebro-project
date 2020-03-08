@@ -5,6 +5,8 @@ import {ObservationMission} from '../model/mission/observation-mission';
   providedIn: 'root'
 })
 export class ObservationMissionService {
+/*
+  TODO Remove this body when the store approach is implemented.
 
   allMissions: ObservationMission[];
   selectedMission: ObservationMission;
@@ -67,6 +69,13 @@ export class ObservationMissionService {
 
   createObservationMission() {
     return new ObservationMission(1, new Date(), []);
+  }*/
+  findMissionById(missionId: any) {
+    return undefined;
+  }
+
+  findAllMissions() {
+    return undefined;
   }
 }
 
