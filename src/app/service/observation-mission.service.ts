@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {ObservationMission} from '../model/mission/observation-mission';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -70,11 +71,13 @@ export class ObservationMissionService {
   createObservationMission() {
     return new ObservationMission(1, new Date(), []);
   }*/
-  findMissionById(missionId: any) {
+
+  // TODO use variableName$ dollar sign for observables.
+  findMissionById(missionId: number): Observable<ObservationMission> { // TODO missionId is a bigint not number
     return undefined;
   }
 
-  findAllMissions() {
+  findAllMissions(): Observable<ObservationMission[]> {
     return undefined;
   }
 }

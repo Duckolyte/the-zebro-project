@@ -12,7 +12,6 @@ export const selectMissionById = (missionId: number) => createSelector(
 export const selectAllMissions = createSelector(
   selectMissionsState,
   fromMission.selectAll
-
 );
 
 export const allMissionsLoaded = createSelector(
@@ -26,4 +25,19 @@ export const selectBeginnerCourses = createSelector(
   selectAllCourses,
   courses => courses.filter(course => course.category === 'BEGINNER')
 );
+*/
+
+/*
+{
+  missions:{
+      ids: ['abc']
+      entities: [                        <-------- this is selectMissionState
+        {
+          id: 'abc'
+          misisonId: number,
+          someprops: some
+        }
+      ],
+        allMissionsLoaded: boolean
+}
 */

@@ -19,22 +19,18 @@ export const initialMissionsState: MissionsState = adapter.getInitialState({
 
 export function missionsReducer(state = initialMissionsState , action: MissionActions): MissionsState {
 
-  switch(action.type) {
+  switch (action.type) {
 
     case MissionActionTypes.MISSION_LOADED:
-
       return adapter.addOne(action.payload.mission, state);
 
     case MissionActionTypes.ALL_MISSIONS_LOADED:
-
       return adapter.addAll(action.payload.missions, {...state, allMissionsLoaded: true});
 
     case MissionActionTypes.MISSION_SAVED:
-
       return adapter.updateOne(action.payload.mission, state);
 
     default: {
-
       return state;
     }
 
@@ -43,5 +39,8 @@ export function missionsReducer(state = initialMissionsState , action: MissionAc
 
 
 export const {
-  selectAll
+  selectAll,
+  selectEntities,
+  selectIds,
+  selectTotal
 } = adapter.getSelectors();

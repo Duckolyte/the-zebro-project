@@ -15,7 +15,13 @@ import {select, Store} from '@ngrx/store';
 import {allMissionsLoaded} from '../selector/mission.selectors';
 
 @Injectable()
-export class CourseEffects {
+export class MissionEffects {
+
+  constructor(
+    private actions$: Actions,
+    private observationMissionService: ObservationMissionService,
+    private store: Store<AppState>
+  ) {}
 
   @Effect()
   loadCourse$ = this.actions$
@@ -24,6 +30,7 @@ export class CourseEffects {
       mergeMap(action => this.observationMissionService.findMissionById(action.payload.missionId)),
       map(mission => new MissionLoaded({mission}))
     );
+
 
   @Effect()
   loadAllCourses$ = this.actions$
@@ -34,11 +41,5 @@ export class CourseEffects {
       mergeMap(() => this.observationMissionService.findAllMissions()),
       map(missions => new AllMissionsLoaded({missions}))
     );
-
-
-  constructor(private actions$: Actions, private observationMissionService: ObservationMissionService,
-              private store: Store<AppState>) {
-
-  }
 
 }
