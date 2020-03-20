@@ -20,11 +20,18 @@ import {
   MatFormFieldModule,
   MatGridListModule,
   MatInputModule,
-  MatNativeDateModule
+  MatNativeDateModule, MatSnackBarModule
 } from '@angular/material';
 import { AnimalObservationComponent } from './view/observation/animal-observation/animal-observation.component';
 import { ObservationActionComponent } from './view/observation/observation-action/observation-action.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
+import {CustomSerializer} from './app-store/shared/utils';
+import { reducers, metaReducers } from './app-store';
+import {StoreModule} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import { HomeComponent } from './view/home/home.component';
+import {missionsReducer} from './app-store/reducers';
 
 @NgModule({
   declarations: [
@@ -35,7 +42,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     ErrorPageComponent,
     MissionComponent,
     AnimalObservationComponent,
-    ObservationActionComponent
+    ObservationActionComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -53,10 +61,16 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     MatButtonToggleModule,
     MatButtonModule,
     MatDividerModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    MatSnackBarModule,
+    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forFeature('missions', missionsReducer),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot({stateKey: 'router'})
   ],
   providers: [
-    MatDatepickerModule
+    MatDatepickerModule,
+    { provide: RouterStateSerializer, useClass: CustomSerializer }
   ],
   bootstrap: [AppComponent]
 })

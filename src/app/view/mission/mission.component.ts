@@ -1,8 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ObservationMission} from '../../model/mission/observation-mission';
 import {NavigationService} from '../../service/navigation.service';
-import {ObservationMissionService} from '../../service/observation-mission.service';
 import {ParcSection} from '../../model/mission/parc-section';
+import {Observable, of} from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {AppState} from '../../app-store';
+import {ActivatedRoute} from '@angular/router';
+import {MissionAdd} from '../../app-store/actions';
+import {selectMissionById} from '../../app-store/selector';
 
 @Component({
   selector: 'app-mission',
@@ -32,37 +37,33 @@ export class MissionComponent implements OnInit {
   };
 
   // Component properties
+  private loading$: Observable<boolean>;
   private observationMission: ObservationMission;
 
   constructor(
-    private observationMissionService: ObservationMissionService,
-    private navigationService: NavigationService
-  ) { }
+    private navigationService: NavigationService,
+    private route: ActivatedRoute,
+    private store: Store<AppState>
+  ) {
+  }
 
   ngOnInit() {
-    // const missionId = url.part.id;
-    // this.observationMission = this.observationMissionService.findObservationMissionById(missionId);
-    const dummyObservationMission = this.observationMissionService.getSelectedMission();
-    if (dummyObservationMission) {
-      this.observationMission = dummyObservationMission;
+    this.observationMission = this.route.snapshot.data.mission;
+    if (!this.observationMission){
+      this.observationMission = new ObservationMission();
     }
-    this.observationMission = this.observationMissionService.createObservationMission();
   }
 
   commitMission(): void {
-    const missionCommited = this.observationMissionService.storeObservationMission(this.observationMission);
-    if (missionCommited) {
-      // @TODO create toast with succesful or failed message
-    }
+    console.log(this.observationMission);
+    this.store.dispatch(new MissionAdd({ mission: this.observationMission }));
   }
 
   startObserving(): void {
     console.log('ObservationMission object before redirect to animal-observation:');
     console.log(this.observationMission);
-
     this.navigationService.navigateTo('animal-observation');
   }
-
 
 
 }

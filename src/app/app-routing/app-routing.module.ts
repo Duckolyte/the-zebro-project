@@ -6,11 +6,24 @@ import {ErrorPageComponent} from '../page/error-page/error-page.component';
 import {MissionComponent} from '../view/mission/mission.component';
 import {AnimalObservationComponent} from '../view/observation/animal-observation/animal-observation.component';
 import {ObservationActionComponent} from '../view/observation/observation-action/observation-action.component';
+import {MissionResolver} from '../service/observation-mission.resolver';
+import {HomeComponent} from '../view/home/home.component';
 
 const routes: Routes = [
   {
+    path: 'home',
+    component: HomeComponent,
+  },
+  {
     path: 'mission',
     component: MissionComponent,
+  },
+  {
+    path: 'mission/:id',
+    component: MissionComponent,
+    resolve: {
+      course: MissionResolver
+    }
   },
   {
     path: 'animal-observation',
@@ -21,24 +34,8 @@ const routes: Routes = [
     component: ObservationActionComponent,
   },
   {
-    path: 'animals',
-    component: AnimalListComponent,
-  },
-  {
-    path: 'zebra/:zebraId',
-    component: ZebraProfilComponent
-  },
-  {
-    path: 'zebra/create',
-    component: ZebraProfilComponent
-  },
-  {
-    path: 'zebra/edit/:zebraId',
-    component: ZebraProfilComponent
-  },
-  {
     path: '',
-    redirectTo: '/mission',
+    redirectTo: '/home',
     pathMatch: 'full'
   },
   {
