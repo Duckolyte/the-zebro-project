@@ -1,0 +1,29 @@
+<div>
+  <mat-grid-list cols="1" rowHeight="5:1">
+    <mat-grid-tile>
+      <p>Some nice zebro pictures or movie containers here.</p>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div id="nestedGrid">
+        <mat-grid-list cols="2" rowHeight="2:1">
+          <mat-grid-tile>
+            <button
+              mat-stroked-button
+              (click)="startMission()"
+            >
+              Start Mission
+            </button>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <button
+              mat-stroked-button
+              (click)="showMissions()"
+            >
+              Show Mission
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
