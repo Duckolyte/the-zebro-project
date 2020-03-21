@@ -31,7 +31,7 @@ export function missionsReducer(state = initialMissionsState , action: MissionAc
       return adapter.updateOne(action.payload.mission, state);
 
     case MissionActionTypes.MISSION_SELECT:
-      return adapter.updateOne(action.payload.missionId, { ...state, selectedMissionId: action.payload.missionId});
+      return adapter.updateOne(action.payload.mission, { selectedMissionId: action.payload.mission.id, ...state});
 
     case MissionActionTypes.MISSION_ADD:
       return adapter.addOne(action.payload.mission, state);

@@ -59,7 +59,7 @@ export class MissionSelect implements Action {
 
   readonly type = MissionActionTypes.MISSION_SELECT;
 
-  constructor(public payload: { missionId: string }) {}
+  constructor(public payload: { mission: Update<ObservationMission> }) {}
 }
 
 
