@@ -5,12 +5,9 @@ import {ParcSection} from '../model/parc-section';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../shared/app-store';
 import {ActivatedRoute} from '@angular/router';
-import {MissionAdd, MissionSelect} from '../../shared/app-store/actions';
+import { v4 as uuid } from 'uuid';
 
-import * as actions from '../mission.actions';
-import * as fromMission from '../mission.reducers';
 import {CreateMission} from '../mission.actions';
-import {UpdateSelectionContext} from '../../shared/selection-context/selection-context.actions';
 
 @Component({
   selector: 'app-mission',
@@ -22,8 +19,8 @@ export class MissionComponent implements OnInit {
   // UI configuration
   private parcSectionToggleButtonGroup = {
     nestedButtons: [
-      {value: ParcSection[0]},
-      {value: ParcSection[1]}
+      {value: ParcSection.H},
+      {value: ParcSection.M}
     ]
   };
   private commitMissionButton = {
@@ -52,15 +49,18 @@ export class MissionComponent implements OnInit {
   ngOnInit() {
     this.observationMission = this.route.snapshot.data.mission;
     if (!this.observationMission){
-      this.observationMission = new ObservationMission();
+      this.observationMission = new ObservationMission(
+        uuid()
+      );
     }
   }
 
-  commitMission(): void {
-    this.store.dispatch(new CreateMission(this.observationMission));
+  leaveMission(): void {
+    this.navigationService.navigateTo('mission');
   }
 
   startObserving(): void {
+    this.store.dispatch(new CreateMission(this.observationMission));
     this.navigationService.navigateTo('animal-observation');
   }
 

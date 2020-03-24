@@ -1,4 +1,4 @@
 export enum ParcSection {
-  'H',
-  'M'
+  H = 'H_NAME',
+  M = 'M_NAME'
 }
