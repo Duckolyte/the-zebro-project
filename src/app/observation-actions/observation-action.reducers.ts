@@ -38,6 +38,14 @@ export function observationReducer(
   }
 }
 
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal
+} = observationAdapter.getSelectors();
+
+/*
 export const getObservationState = createFeatureSelector<State>('observation');
 
 export const {
@@ -46,5 +54,6 @@ export const {
   selectAll,
   selectTotal
 } = observationAdapter.getSelectors(getObservationState);
+*/
 
 

@@ -56,7 +56,7 @@ export class MissionComponent implements OnInit {
   }
 
   leaveMission(): void {
-    this.navigationService.navigateTo('mission');
+    this.navigationService.navigateTo('home');
   }
 
   startObserving(): void {

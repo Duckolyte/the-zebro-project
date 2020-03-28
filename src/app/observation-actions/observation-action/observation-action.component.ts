@@ -5,11 +5,14 @@ import {NavigationService} from '../../shared/service/navigation.service';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../shared/app-store';
 import {CreateObservation} from '../observation-action.actions';
-import { v4 as uuid } from 'uuid';
+import {v4 as uuid} from 'uuid';
 import {selectionContextAdapter} from '../../shared/selection-context/selection-context.reducers';
 import {first, tap} from 'rxjs/operators';
-import { selectAll } from '../../missions/mission.reducers';
+import * as fromMissionsReducers from '../../missions/mission.reducers';
+import * as fromMissionsSelectors from '../../missions/mission.selectors';
 import {AnimalObservation} from '../../animal-observations/model/animal-observation';
+import {ObservationMission} from '../../missions/model/observation-mission';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-observation-action',
@@ -38,10 +41,14 @@ export class ObservationActionComponent implements OnInit {
   private observationAction: ObservationAction;
   private observations: AnimalObservation[];
 
+  // TODO remove
+  dummyActiveMission$: Observable<ObservationMission[]> =  this.store.pipe(select(fromMissionsSelectors.selectAllMissions));
+
   constructor(
     private navigationService: NavigationService,
-    private store: Store<AppState>
-  ) { }
+    private store: Store<fromMissionsReducers.State>
+  ) {
+  }
 
   ngOnInit() {
     // @TODO
@@ -51,11 +58,10 @@ export class ObservationActionComponent implements OnInit {
     // Here should select via the selection context.
     // Because else mixin feature depenecies.
     // And because the observationAction needs to be created already when enter the page animal-observation.component.
-    const activeMission = this.store.pipe(
-      select(selectAll),
-      first()
-    );
-    console.log(activeMission);
+    this.dummyActiveMission$.subscribe(currentPizzas => {
+      // This function is called everytime your state changes + initial state
+      console.log(currentPizzas); // This logs your current pizza state
+    });
     this.observationAction = new ObservationAction(
       uuid(),
       '1'

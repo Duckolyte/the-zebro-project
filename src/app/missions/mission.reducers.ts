@@ -38,7 +38,14 @@ export function missionReducer(
   }
 }
 
-export const getMissionState = createFeatureSelector<State>('mission');
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal
+} = missionAdapter.getSelectors();
+
+/*export const getMissionState = createFeatureSelector<State>('missions');
 
 export const {
   selectIds,
@@ -46,5 +53,5 @@ export const {
   selectAll,
   selectTotal
 } = missionAdapter.getSelectors(getMissionState);
-
+*/
 
