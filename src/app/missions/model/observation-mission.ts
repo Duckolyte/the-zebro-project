@@ -6,7 +6,7 @@ export class ObservationMission {
   timeStamp: Date;
 
   constructor(
-    private id: string,
+    public id: string,
     parcSection: ParcSection = ParcSection.H,
     timeStamp: Date = new Date()
   )

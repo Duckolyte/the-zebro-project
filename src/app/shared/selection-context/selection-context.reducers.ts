@@ -1,5 +1,4 @@
 import { createEntityAdapter, EntityState} from '@ngrx/entity';
-import { createFeatureSelector } from '@ngrx/store';
 
 import {SelectionContext} from '../model/common/selection-context';
 import * as fromSelectionContext from './selection-context.actions';
@@ -38,14 +37,12 @@ export function selectionReducer(
   }
 }
 
-export const getSelectionContextState = createFeatureSelector<State>('selection');
-
 export const {
   selectIds,
   selectEntities,
   selectAll,
   selectTotal
-} = selectionContextAdapter.getSelectors(getSelectionContextState);
+} = selectionContextAdapter.getSelectors();
 
 
 

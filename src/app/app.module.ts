@@ -12,14 +12,8 @@ import { ErrorPageComponent } from './shared/page/error-page/error-page.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
-  MatButtonModule,
-  MatButtonToggleModule,
   MatCardModule,
-  MatDatepickerModule, MatDividerModule,
-  MatFormFieldModule,
-  MatGridListModule,
-  MatInputModule,
-  MatNativeDateModule, MatSnackBarModule
+  MatDatepickerModule,
 } from '@angular/material';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {RouterStateSerializer, StoreRouterConnectingModule} from '@ngrx/router-store';
@@ -31,6 +25,7 @@ import {EffectsModule} from '@ngrx/effects';
 import { MissionsModule } from './missions/missions.module';
 import { ObservationActionsModule } from './observation-actions/observation-actions.module';
 import { AnimalObservationsModule } from './animal-observations/animal-observations.module';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -48,19 +43,11 @@ import { AnimalObservationsModule } from './animal-observations/animal-observati
     ReactiveFormsModule,
     MatCardModule,
     FormsModule,
-    MatGridListModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatSnackBarModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {metaReducers}),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
+    SharedModule,
     MissionsModule,
     ObservationActionsModule,
     AnimalObservationsModule

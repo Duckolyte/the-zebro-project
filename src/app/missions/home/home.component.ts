@@ -9,6 +9,9 @@ import {AppState} from '../../shared/app-store';
 import {select, Store} from '@ngrx/store';
 import {AllMissionsRequested} from '../../shared/app-store/actions';
 import {selectAllMissions} from '../../shared/app-store/selector';
+import {CreateSelectionContext} from '../../shared/selection-context/selection-context.actions';
+import { v4 as uuid } from 'uuid';
+import {SelectionContext} from '../../shared/model/common/selection-context';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +41,13 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new AllMissionsRequested());
+
+    const selectionContext: SelectionContext = {
+      id: '1',
+      selectedMissionId: '',
+      selectedObservationId: ''
+    }
+    this.store.dispatch(new CreateSelectionContext(selectionContext));
 
     this.allObservationMissions = this.store.pipe(select(selectAllMissions));
   }

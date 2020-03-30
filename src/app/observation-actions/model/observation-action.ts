@@ -8,8 +8,8 @@ export class ObservationAction {
   observationDateTime: Date;
 
   constructor(
-    private id: string,
-    private missionId: string,
+    public id: string,
+    public missionId: string,
     observationQualityCode: ObservationQualityCode = 0,
     gps: GpsPoint = new GpsPoint(),
     observationDateTime: Date = new Date()

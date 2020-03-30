@@ -36,7 +36,7 @@ import {
     MatButtonModule,
     MatDividerModule,
     MatSnackBarModule,
-    StoreModule.forFeature('observation', observationReducer)
+    StoreModule.forFeature('observations', observationReducer)
   ]
 })
 

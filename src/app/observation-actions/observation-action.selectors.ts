@@ -1,12 +1,12 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import * as fromObservation from '../observation-actions/observation-action.reducers';
 
-export const getObservationState = createFeatureSelector<fromObservation.State>('observation');
+export const getObservationState = createFeatureSelector<fromObservation.State>('observations');
 
 
 export const selectObservationById = (observationId: string) => createSelector(
   getObservationState,
-  observationState => observationState.entities.observationId
+  observationState => observationState.entities[observationId]
 );
 
 export const selectLatestObservation = createSelector(

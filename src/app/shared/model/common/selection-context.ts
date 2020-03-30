@@ -1,5 +1,5 @@
 export interface SelectionContext {
-  contextId: number;
-  selectedObservationMissionId: string;
-  selectedAnimalObservationId: string;
+  id: string;
+  selectedMissionId: string;
+  selectedObservationId: string;
 }

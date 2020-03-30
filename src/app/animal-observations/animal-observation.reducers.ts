@@ -38,6 +38,14 @@ export function animalObservationReducer(
   }
 }
 
+export const {
+  selectIds,
+  selectEntities,
+  selectAll,
+  selectTotal
+} = animalObservationAdapter.getSelectors();
+
+/*
 export const getAnimalObservationState = createFeatureSelector<State>('animalObservation');
 
 export const {
@@ -46,5 +54,5 @@ export const {
   selectAll,
   selectTotal
 } = animalObservationAdapter.getSelectors(getAnimalObservationState);
-
+ */
 

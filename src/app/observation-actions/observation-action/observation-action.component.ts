@@ -10,9 +10,11 @@ import {selectionContextAdapter} from '../../shared/selection-context/selection-
 import {first, tap} from 'rxjs/operators';
 import * as fromMissionsReducers from '../../missions/mission.reducers';
 import * as fromMissionsSelectors from '../../missions/mission.selectors';
+import * as fromSelectionContext from '../../shared/selection-context/selection-context.selectors';
 import {AnimalObservation} from '../../animal-observations/model/animal-observation';
 import {ObservationMission} from '../../missions/model/observation-mission';
 import {Observable} from 'rxjs';
+import {SelectionContext} from '../../shared/model/common/selection-context';
 
 @Component({
   selector: 'app-observation-action',
@@ -41,8 +43,9 @@ export class ObservationActionComponent implements OnInit {
   private observationAction: ObservationAction;
   private observations: AnimalObservation[];
 
-  // TODO remove
-  dummyActiveMission$: Observable<ObservationMission[]> =  this.store.pipe(select(fromMissionsSelectors.selectAllMissions));
+  // TODO there should be a possibility to select the mission id directly instead of the selectioncontext first then selectedMissionId
+  selectionContext$: Observable<SelectionContext[]> = this.store.pipe(select(fromSelectionContext.selectSelectionContext));
+  private selectedMissionId;
 
   constructor(
     private navigationService: NavigationService,
@@ -54,17 +57,14 @@ export class ObservationActionComponent implements OnInit {
     // @TODO
     // Load observations by Id.
     this.observations = [];
-    // @TODO
-    // Here should select via the selection context.
-    // Because else mixin feature depenecies.
-    // And because the observationAction needs to be created already when enter the page animal-observation.component.
-    this.dummyActiveMission$.subscribe(currentPizzas => {
-      // This function is called everytime your state changes + initial state
-      console.log(currentPizzas); // This logs your current pizza state
+
+    this.selectionContext$.subscribe(selectionContext => {
+      this.selectedMissionId = selectionContext[0].selectedMissionId;
     });
+
     this.observationAction = new ObservationAction(
       uuid(),
-      '1'
+      this.selectedMissionId
     );
   }
 
