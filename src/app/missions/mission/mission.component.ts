@@ -59,20 +59,29 @@ export class MissionComponent implements OnInit {
     this.selectionContext$.subscribe(selectionContext => {
       this.selectedMissionId = selectionContext[0] ? selectionContext[0].selectedMissionId : undefined;
     });
-    console.log(this.selectedMissionId)
+    console.log(this.selectedMissionId);
     if (this.selectedMissionId) {
+      // TODO below code duplication spot 1
       this.observationMission$ = this.store.pipe(select(fromMissions.selectMissionById(this.selectedMissionId)));
       this.observationMission$.subscribe(mission => {
         console.log(mission);
         this.observationMission = Object.assign({}, mission);
       });
+      // code duplication spot 1 end
     }
     console.log(this.observationMission);
     if (!this.observationMission) {
-      this.observationMission = new ObservationMission(
+      const observationMission = new ObservationMission(
         uuid()
       );
-      this.store.dispatch(new CreateMission(this.observationMission));
+      this.store.dispatch(new CreateMission(observationMission));
+      // TODO below code duplication spot 2
+      this.observationMission$ = this.store.pipe(select(fromMissions.selectMissionById(observationMission.id)));
+      this.observationMission$.subscribe(mission => {
+        console.log(mission);
+        this.observationMission = Object.assign({}, mission);
+      });
+      // code duplication spot 2 end
     }
   }
 
