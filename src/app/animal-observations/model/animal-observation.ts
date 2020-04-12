@@ -3,8 +3,9 @@ import {Age} from './age';
 import {PregnancyGrade} from './pregnancy-grade.enum';
 
 export class AnimalObservation {
-  private RightSideImageReferences: number[];
-  private LeftSideImageReferences: number[];
+  id: string;
+  // private rightSideImageReferences: number[]; TODO references are from image to Observation
+  //private leftSideImageReferences: number[]; TODO references are from image to Observation
   private sex: Sex;
   private age: Age;
   private pregnancyGrade: PregnancyGrade;
