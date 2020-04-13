@@ -1,13 +1,66 @@
-<div>
-  <mat-grid-list cols="1" rowHeight="5:1">
-    <mat-grid-tile></mat-grid-tile>
-    <mat-grid-tile>
-      <button
-        mat-stroked-button
-        (click)="stopObservingAnimals()"
-      >
-        Start Observation
-      </button>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+
+    <!-- TODO exmaple sidenav content to be replaced -->
+    <p>Auto-resizing sidenav</p>
+    <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+    <button (click)="showFiller = !showFiller" mat-raised-button>
+      Toggle extra text
+    </button>
+
+    <mat-list>
+      <!-- TODO for each group of animals make a subheader and a spacer like below
+      <ng-template ngFor let-group [ngForOf]="groups" let-i="index" [ngForTrackBy]="trackByFn">
+        <div mat-subheader>Folders</div>
+        <mat-list-item *ngFor="let animal of group.animal">
+          <app-animal-observation-table-row [animal]="animal"></app-animal-observation-table-row>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-template>
+      -->
+      <div mat-subheader>Folders</div>
+      <mat-list-item *ngFor="let folder of folders">
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <div mat-line>{{folder.name}}</div>
+        <div mat-line> {{folder.updated | date}} </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <div mat-subheader>Notes</div>
+      <mat-list-item *ngFor="let note of notes">
+        <mat-icon mat-list-icon>note</mat-icon>
+        <div mat-line>{{note.name}}</div>
+        <div mat-line> {{note.updated | date}} </div>
+      </mat-list-item>
+    </mat-list>
+
+
+  </mat-drawer>
+
+  <div>
+    <button type="button" mat-button (click)="drawer.toggle()">
+      >>>
+    </button>
+    <mat-grid-list cols="2" >
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile>
+        <button
+          mat-stroked-button
+          (click)="stopObservingAnimals()"
+        >
+          Start Observation
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="1" rowHeight="5:1">
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile>
+        <button
+          mat-stroked-button
+          (click)="stopObservingAnimals()"
+        >
+          Start Observation
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</mat-drawer-container>

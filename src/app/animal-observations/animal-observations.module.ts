@@ -13,9 +13,9 @@ import {
   MatCardModule,
   MatDatepickerModule, MatDividerModule,
   MatFormFieldModule,
-  MatGridListModule,
-  MatInputModule,
-  MatNativeDateModule, MatSnackBarModule
+  MatGridListModule, MatIconModule,
+  MatInputModule, MatListModule,
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 
 
@@ -36,7 +36,10 @@ import {
     MatButtonModule,
     MatDividerModule,
     MatSnackBarModule,
-    StoreModule.forFeature('animalObservations', animalObservationReducer)
+    StoreModule.forFeature('animalObservations', animalObservationReducer),
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule
   ]
 })
 
