@@ -1,4 +1,4 @@
-import { Age } from './age';
+import { Age } from './age.enum';
 
 describe('Age', () => {
   it('should create an instance', () => {

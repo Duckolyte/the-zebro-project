@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NavigationService} from '../../shared/service/navigation.service';
 import {AnimalObservation} from '../model/animal-observation';
+
+import {v4 as uuid} from 'uuid';
+import {Sex} from '../model/sex.enum';
+import {Age} from '../model/age.enum';
+import {PregnancyGrade} from '../model/pregnancy-grade.enum';
 
 export interface Section {
   name: string;
@@ -17,6 +22,34 @@ export interface Section {
 export class AnimalObservationComponent implements OnInit {
 
   private showFiller = false;
+
+  private obs1: AnimalObservation = new AnimalObservation(
+    uuid(),
+    uuid(),
+    Sex.F,
+    Age.A,
+    PregnancyGrade.PREGNANT,
+    'Animal One'
+  );
+  private obs2: AnimalObservation = new AnimalObservation(
+    uuid(),
+    uuid(),
+    Sex.F,
+    Age.SA,
+    PregnancyGrade.EVENTUALLY_PREGNANT,
+    'Animal Two'
+  );
+  private obs3: AnimalObservation = new AnimalObservation(
+    uuid(),
+    uuid(),
+    Sex.M,
+    Age.F,
+    PregnancyGrade.NOT_PREGNANT,
+    'Animal Three'
+  );
+
+
+  private observations: AnimalObservation[] = [this.obs1, this.obs2, this.obs3];
 
   folders: Section[] = [
     {
@@ -46,15 +79,13 @@ export class AnimalObservationComponent implements OnInit {
 
   constructor(
     private navigationService: NavigationService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
   }
 
   stopObservingAnimals() {
-    const dummyAnimalObservation1 = new AnimalObservation();
-    const dummyAnimalObservation2 = new AnimalObservation();
-    const dummySetOFAnimals = [dummyAnimalObservation1, dummyAnimalObservation2];
     //  @TODO
     // in this component there is inserted the observationAction compnent which must be created when start observation from the missions
     // component. Update the animalObservations list in the components observation action and then redirect to observation-action.

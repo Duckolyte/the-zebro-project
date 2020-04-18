@@ -1,5 +1,5 @@
 export enum PregnancyGrade {
-  'p',
-  'p?',
-
+  PREGNANT = 'pregnant',
+  EVENTUALLY_PREGNANT = 'eventually pregnant',
+  NOT_PREGNANT = 'not pregnant'
 }
