@@ -1,9 +1,34 @@
 <mat-list-item>
 
   <ng-container *ngIf="!showDetails">
-    <mat-chip-list>
+<!--    <mat-chip-list>
       <mat-chip *ngFor="let id of observation.imageIds">{{id}}</mat-chip>
-    </mat-chip-list>
+    </mat-chip-list>-->
+      <mat-chip-list #chipList aria-label="">
+        <ng-container *ngIf="observation.imageIds.length < 4; else shrinkIds">
+          <mat-chip *ngFor="let id of observation.imageIds" [selectable]="selectable"
+                    [removable]="removable" (removed)="remove(id)">
+            {{id}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </ng-container>
+        <ng-template #shrinkIds>
+          <mat-chip [selectable]="selectable">
+            {{observation.imageIds[0]}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          ...
+          <mat-chip [selectable]="selectable">
+            {{observation.imageIds[observation.imageIds.length - 1]}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </ng-template>
+        <input placeholder="New ..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
   </ng-container>
 
   <ng-container *ngIf="showDetails">

@@ -95,6 +95,20 @@ export class AnimalObservationComponent implements OnInit {
   ngOnInit() {
   }
 
+  addObservation(): void {
+    const observation = new AnimalObservation(
+      uuid(),
+      uuid(),
+      [],
+      Sex.U,
+      Age.U,
+      PregnancyGrade.EMPTY,
+      ''
+    );
+    // TODO append to the selected group. To do this need to create the selection.
+    this.group1.observations.push(observation);
+  }
+
   stopObservingAnimals() {
     //  @TODO
     // in this component there is inserted the observationAction compnent which must be created when start observation from the missions

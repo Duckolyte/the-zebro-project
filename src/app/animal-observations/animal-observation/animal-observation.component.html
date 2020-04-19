@@ -1,8 +1,11 @@
 <mat-drawer-container class="example-container" autosize>
   <mat-drawer #drawer class="example-sidenav" mode="side">
 
-    <h3>Selected Groups</h3>
-    <button (click)="showDetails = !showDetails" mat-raised-button>
+    <h4>Selected Groups</h4>
+    <button (click)="addObservation()" mat-raised-button>
+      +
+    </button>
+    <button (click)="showDetails = !showDetails" mat-raised-button style="margin-left: 5px;">
       Toggle Details
     </button>
 
@@ -16,26 +19,16 @@
       </ng-container>
     </mat-list>
 
-
   </mat-drawer>
 
   <div>
     <button type="button" mat-button (click)="drawer.toggle()">
       >>>
     </button>
-    <mat-grid-list cols="2" >
-      <mat-grid-tile></mat-grid-tile>
+    <mat-grid-list cols="1" >
       <mat-grid-tile>
-        <button
-          mat-stroked-button
-          (click)="stopObservingAnimals()"
-        >
-          Start Observation
-        </button>
+        <app-observation-form></app-observation-form>
       </mat-grid-tile>
-    </mat-grid-list>
-    <mat-grid-list cols="1" rowHeight="5:1">
-      <mat-grid-tile></mat-grid-tile>
       <mat-grid-tile>
         <button
           mat-stroked-button

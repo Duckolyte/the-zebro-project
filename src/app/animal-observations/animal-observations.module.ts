@@ -18,9 +18,10 @@ import {
   MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
 import { ObservationRowComponent } from './observation-row/observation-row.component';
+import { ObservationFormComponent } from './observation-form/observation-form.component';
 
 @NgModule({
-  declarations: [AnimalObservationComponent, ObservationRowComponent],
+  declarations: [AnimalObservationComponent, ObservationRowComponent, ObservationFormComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
