@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatChipInputEvent} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {AnimalObservation} from '../model/animal-observation';
 
 export interface ImageId {
   name: string;
@@ -19,10 +20,13 @@ export class ObservationFormComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  @Input()
+  private observation: AnimalObservation;
   imageRightIds: ImageId[] = [];
   imageLeftIds: ImageId[] = [];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

@@ -1,4 +1,10 @@
 <mat-drawer-container class="example-container" autosize>
+  <div>
+    <button type="button" mat-button (click)="drawer.toggle()">
+      >>>
+    </button>
+  </div>
+
   <mat-drawer #drawer class="example-sidenav" mode="side">
 
     <h4>Selected Groups</h4>
@@ -21,22 +27,17 @@
 
   </mat-drawer>
 
-  <div>
-    <button type="button" mat-button (click)="drawer.toggle()">
-      >>>
-    </button>
-    <mat-grid-list cols="1" >
-      <mat-grid-tile>
-        <app-observation-form></app-observation-form>
-      </mat-grid-tile>
-      <mat-grid-tile>
-        <button
-          mat-stroked-button
-          (click)="stopObservingAnimals()"
-        >
-          Start Observation
-        </button>
-      </mat-grid-tile>
-    </mat-grid-list>
+  <div class="observation-form-container">
+    <app-observation-form></app-observation-form>
+    <div class="navigation-button-container">
+      <button
+        mat-stroked-button
+        (click)="stopObservingAnimals()"
+      >
+        Start Observation
+      </button>
+    </div>
   </div>
+
+
 </mat-drawer-container>
