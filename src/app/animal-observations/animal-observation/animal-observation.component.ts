@@ -6,6 +6,7 @@ import {v4 as uuid} from 'uuid';
 import {Sex} from '../model/sex.enum';
 import {Age} from '../model/age.enum';
 import {PregnancyGrade} from '../model/pregnancy-grade.enum';
+import {AnimalSide} from '../model/animal-side.enum';
 
 export interface Section {
   name: string;
@@ -28,7 +29,23 @@ export class AnimalObservationComponent implements OnInit {
   private obs1: AnimalObservation = new AnimalObservation(
     uuid(),
     uuid(),
-    [1, 2, 3],
+    [
+      {
+        id: uuid(),
+        imageTag: 1,
+        animalSide: AnimalSide.LEFT
+      },
+      {
+        id: uuid(),
+        imageTag: 2,
+        animalSide: AnimalSide.RIGHT
+      },
+      {
+        id: uuid(),
+        imageTag: 3,
+        animalSide: AnimalSide.LEFT
+      }
+    ],
     Sex.F,
     Age.A,
     PregnancyGrade.PREGNANT,
@@ -37,7 +54,18 @@ export class AnimalObservationComponent implements OnInit {
   private obs2: AnimalObservation = new AnimalObservation(
     uuid(),
     uuid(),
-    [23, 24],
+    [
+      {
+        id: uuid(),
+        imageTag: 22,
+        animalSide: AnimalSide.RIGHT
+      },
+      {
+        id: uuid(),
+        imageTag: 23,
+        animalSide: AnimalSide.LEFT
+      }
+    ],
     Sex.F,
     Age.SA,
     PregnancyGrade.EVENTUALLY_PREGNANT,
@@ -46,7 +74,13 @@ export class AnimalObservationComponent implements OnInit {
   private obs3: AnimalObservation = new AnimalObservation(
     uuid(),
     uuid(),
-    [31],
+    [
+      {
+        id: uuid(),
+        imageTag: 311,
+        animalSide: AnimalSide.RIGHT
+      }
+    ],
     Sex.M,
     Age.F,
     PregnancyGrade.NOT_PREGNANT,
@@ -86,6 +120,8 @@ export class AnimalObservationComponent implements OnInit {
     }
   ];
 
+  private selectedObservation: AnimalObservation;
+
 
   constructor(
     private navigationService: NavigationService
@@ -115,5 +151,12 @@ export class AnimalObservationComponent implements OnInit {
     // component. Update the animalObservations list in the components observation action and then redirect to observation-action.
     console.log(`Redirecting to observation-action`);
     this.navigationService.navigateTo('observation-action');
+  }
+
+  getSelectedObservation() {
+    if (this.selectedObservation){
+      return this.selectedObservation;
+    }
+    return this.observations[0];
   }
 }

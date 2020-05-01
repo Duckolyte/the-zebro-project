@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatChipInputEvent} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {AnimalObservation} from '../model/animal-observation';
+import {AnimalSide} from '../model/animal-side.enum';
+import {v4 as uuid} from 'uuid';
 
 export interface ImageId {
   name: string;
@@ -19,6 +21,8 @@ export class ObservationFormComponent implements OnInit {
   removable = true;
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly rightSide = AnimalSide.RIGHT;
+  readonly leftSide = AnimalSide.LEFT;
 
   @Input()
   private observation: AnimalObservation;
@@ -31,13 +35,22 @@ export class ObservationFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  add(event: MatChipInputEvent, imageIds: ImageId[]): void {
+  getAnimalSideImageTags(side: AnimalSide) {
+    return this.observation.imageIds.filter(desc => desc.animalSide === side);
+  }
+
+  add(event: MatChipInputEvent, side: AnimalSide): void {
     const input = event.input;
     const value = event.value;
 
-    // Add image id
+    // Add our fruit
     if ((value || '').trim()) {
-      imageIds.push({name: value.trim()});
+      this.observation.imageIds.push(
+        {
+          id: uuid(),
+          imageTag: Number(value.trim()),
+          animalSide: side
+        });
     }
 
     // Reset the input value
@@ -46,12 +59,11 @@ export class ObservationFormComponent implements OnInit {
     }
   }
 
-  remove(imageId: ImageId, imageIds: ImageId[]): void {
-    const index = imageIds.indexOf(imageId);
+  remove(imageId: number): void {
+    const index = this.observation.imageIds.indexOf(this.observation.imageIds.find(description => description.imageTag === imageId));
 
     if (index >= 0) {
-      imageIds.splice(index, 1);
+      this.observation.imageIds.splice(index, 1);
     }
   }
-
 }

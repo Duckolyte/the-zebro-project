@@ -1,7 +1,9 @@
-import {Component, Input, OnInit, Pipe, PipeTransform} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {AnimalObservation} from '../model/animal-observation';
 import {MatChipInputEvent} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {AnimalSide} from '../model/animal-side.enum';
+import {v4 as uuid} from 'uuid';
 
 @Component({
   selector: 'app-observation-row',
@@ -33,7 +35,12 @@ export class ObservationRowComponent implements OnInit {
 
     // Add our fruit
     if ((value || '').trim()) {
-      this.observation.imageIds.push(Number(value.trim()));
+      this.observation.imageIds.push(
+        {
+          id: uuid(),
+          imageTag: Number(value.trim()),
+          animalSide: AnimalSide.RIGHT
+    });
     }
 
     // Reset the input value
@@ -43,7 +50,7 @@ export class ObservationRowComponent implements OnInit {
   }
 
   remove(imageId: number): void {
-    const index = this.observation.imageIds.indexOf(imageId);
+    const index = this.observation.imageIds.indexOf(this.observation.imageIds.find(description => description.imageTag === imageId));
 
     if (index >= 0) {
       this.observation.imageIds.splice(index, 1);

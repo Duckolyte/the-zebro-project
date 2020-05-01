@@ -1,11 +1,12 @@
 import {Sex} from './sex.enum';
 import {Age} from './age.enum';
 import {PregnancyGrade} from './pregnancy-grade.enum';
+import {ImageDescription} from './image-description';
 
 export class AnimalObservation {
   id: string;
   observationActionId: string;
-  imageIds: number[];
+  imageIds: ImageDescription[];
   sex: Sex;
   age: Age;
   pregnancyGrade: PregnancyGrade;
@@ -14,7 +15,7 @@ export class AnimalObservation {
   constructor(
     id: string,
     observationActionId: string,
-    imageIds: number[],
+    imageIds: ImageDescription[],
     sex: Sex,
     age: Age,
     pregnancyGrade: PregnancyGrade,

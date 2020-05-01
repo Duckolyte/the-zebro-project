@@ -6,20 +6,20 @@
     </mat-chip-list>-->
       <mat-chip-list #chipList aria-label="">
         <ng-container *ngIf="observation.imageIds.length < 4; else shrinkIds">
-          <mat-chip *ngFor="let id of observation.imageIds" [selectable]="selectable"
-                    [removable]="removable" (removed)="remove(id)">
-            {{id}}
+          <mat-chip *ngFor="let description of observation.imageIds" [selectable]="selectable"
+                    [removable]="removable" (removed)="remove(description.imageTag)">
+            {{description.imageTag}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
         </ng-container>
         <ng-template #shrinkIds>
-          <mat-chip [selectable]="selectable">
-            {{observation.imageIds[0]}}
+          <mat-chip [selectable]="selectable" [removable]="removable"  (removed)="remove(observation.imageIds[0].imageTag)">
+            {{observation.imageIds[0].imageTag}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
           ...
-          <mat-chip [selectable]="selectable">
-            {{observation.imageIds[observation.imageIds.length - 1]}}
+          <mat-chip [selectable]="selectable" [removable]="removable" (removed)="remove(observation.imageIds[observation.imageIds.length - 1].imageTag)">
+            {{observation.imageIds[observation.imageIds.length - 1].imageTag}}
             <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
           </mat-chip>
         </ng-template>

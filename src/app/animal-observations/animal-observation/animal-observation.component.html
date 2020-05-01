@@ -28,7 +28,7 @@
   </mat-drawer>
 
   <div class="observation-form-container">
-    <app-observation-form></app-observation-form>
+    <app-observation-form [observation]="getSelectedObservation()"></app-observation-form>
     <div class="navigation-button-container">
       <button
         mat-stroked-button
