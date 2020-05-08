@@ -19,7 +19,9 @@
       <ng-container *ngFor="let group of groups">
         <div mat-subheader>{{group.groupName}}</div>
         <mat-list-item *ngFor="let obs of group.observations">
-          <app-observation-row [showDetails]="showDetails" [observation]="obs"></app-observation-row>
+          <app-observation-row [showDetails]="showDetails" [observation]="obs"
+                               [selectedObservationRow]="selectedObservation">
+          </app-observation-row>
         </mat-list-item>
         <mat-divider></mat-divider>
       </ng-container>

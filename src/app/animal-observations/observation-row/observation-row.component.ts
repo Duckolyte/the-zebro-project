@@ -22,6 +22,9 @@ export class ObservationRowComponent implements OnInit {
   showDetails: boolean;
 
   @Input()
+  selectedObservationRow: AnimalObservation;
+
+  @Input()
   private observation: AnimalObservation;
 
   constructor() { }
@@ -57,4 +60,9 @@ export class ObservationRowComponent implements OnInit {
     }
   }
 
+  selectObservationRow($event: MouseEvent) {
+    console.log($event);
+    console.log(this.observation);
+    this.selectedObservationRow = this.observation;
+  }
 }
