@@ -143,6 +143,7 @@ export class AnimalObservationComponent implements OnInit {
     );
     // TODO append to the selected group. To do this need to create the selection.
     this.group1.observations.push(observation);
+    console.log(this.selectedObservation);
   }
 
   stopObservingAnimals() {
@@ -154,9 +155,16 @@ export class AnimalObservationComponent implements OnInit {
   }
 
   getSelectedObservation() {
-    if (this.selectedObservation){
+    if (this.selectedObservation) {
       return this.selectedObservation;
     }
-    return this.observations[0];
+    this.selectedObservation = this.observations[0];
+    return this.selectedObservation;
+  }
+
+  onSelected(selectedObservation: AnimalObservation) {
+    if (selectedObservation.id !== this.selectedObservation.id) {
+      this.selectedObservation = selectedObservation;
+    }
   }
 }

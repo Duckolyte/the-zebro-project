@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AnimalObservation} from '../model/animal-observation';
 import {MatChipInputEvent} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
@@ -26,6 +26,9 @@ export class ObservationRowComponent implements OnInit {
 
   @Input()
   private observation: AnimalObservation;
+
+  @Output()
+  selected = new EventEmitter<AnimalObservation>();
 
   constructor() { }
 
@@ -61,8 +64,6 @@ export class ObservationRowComponent implements OnInit {
   }
 
   selectObservationRow($event: MouseEvent) {
-    console.log($event);
-    console.log(this.observation);
-    this.selectedObservationRow = this.observation;
+    this.selected.emit(this.observation);
   }
 }
