@@ -1,9 +1,6 @@
 <mat-list-item (click)="selectObservationRow($event)">
 
   <ng-container *ngIf="!showDetails">
-<!--    <mat-chip-list>
-      <mat-chip *ngFor="let id of observation.imageIds">{{id}}</mat-chip>
-    </mat-chip-list>-->
       <mat-chip-list #chipList aria-label="">
         <ng-container *ngIf="observation.imageIds.length < 4; else shrinkIds">
           <mat-chip *ngFor="let description of observation.imageIds" [selectable]="selectable"

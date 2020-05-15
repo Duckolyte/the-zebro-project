@@ -19,9 +19,10 @@ import {
 } from '@angular/material';
 import { ObservationRowComponent } from './observation-row/observation-row.component';
 import { ObservationFormComponent } from './observation-form/observation-form.component';
+import { AnimalGroupsComponent } from './animal-groups/animal-groups.component';
 
 @NgModule({
-  declarations: [AnimalObservationComponent, ObservationRowComponent, ObservationFormComponent],
+  declarations: [AnimalObservationComponent, ObservationRowComponent, ObservationFormComponent, AnimalGroupsComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
