@@ -7,11 +7,7 @@ import {Sex} from '../model/sex.enum';
 import {Age} from '../model/age.enum';
 import {PregnancyGrade} from '../model/pregnancy-grade.enum';
 import {AnimalSide} from '../model/animal-side.enum';
-
-export interface Section {
-  name: string;
-  updated: Date;
-}
+import {AnimalGroup} from '../../shared/model/interface/animal/animal-group';
 
 @Component({
   selector: 'app-animal-observation',
@@ -22,13 +18,15 @@ export interface Section {
 
 export class AnimalObservationComponent implements OnInit {
 
-  private showFiller = false;
-
   private showDetails = false;
+
+  private obs1and2GroupId = uuid();
+  private obs3GroupId = uuid();
 
   private obs1: AnimalObservation = new AnimalObservation(
     uuid(),
     uuid(),
+    this.obs1and2GroupId,
     [
       {
         id: uuid(),
@@ -54,6 +52,7 @@ export class AnimalObservationComponent implements OnInit {
   private obs2: AnimalObservation = new AnimalObservation(
     uuid(),
     uuid(),
+    this.obs1and2GroupId,
     [
       {
         id: uuid(),
@@ -74,6 +73,7 @@ export class AnimalObservationComponent implements OnInit {
   private obs3: AnimalObservation = new AnimalObservation(
     uuid(),
     uuid(),
+    this.obs3GroupId,
     [
       {
         id: uuid(),
@@ -87,41 +87,16 @@ export class AnimalObservationComponent implements OnInit {
     'Animal Three'
   );
 
-
   private observations: AnimalObservation[] = [this.obs1, this.obs2, this.obs3];
 
-  private group1: any = { id: 1, groupName: 'Group 1', observations: [this.obs1, this.obs2]};
-  private group2: any = { id: 2, groupName: 'Group 2', observations: [this.obs3]};
+  private group1: AnimalGroup = {id: uuid(), groupName: 'Group 1', groupMembers: [this.obs1, this.obs2]};
+  private group2: AnimalGroup = {id: uuid(), groupName: 'Group 2', groupMembers: [this.obs3]};
 
-  private groups: any[] = [this.group1, this.group2];
-
-  folders: Section[] = [
-    {
-      name: 'Photos',
-      updated: new Date('1/1/16'),
-    },
-    {
-      name: 'Recipes',
-      updated: new Date('1/17/16'),
-    },
-    {
-      name: 'Work',
-      updated: new Date('1/28/16'),
-    }
-  ];
-  notes: Section[] = [
-    {
-      name: 'Vacation Itinerary',
-      updated: new Date('2/20/16'),
-    },
-    {
-      name: 'Kitchen Remodel',
-      updated: new Date('1/18/16'),
-    }
-  ];
+  private groups: AnimalGroup[] = [this.group1, this.group2];
 
   private selectedObservation: AnimalObservation;
-
+  private selectedGroups: AnimalGroup[] = [];
+  private activeGroup: AnimalGroup;
 
   constructor(
     private navigationService: NavigationService
@@ -135,6 +110,7 @@ export class AnimalObservationComponent implements OnInit {
     const observation = new AnimalObservation(
       uuid(),
       uuid(),
+      this.activeGroup.id,
       [],
       Sex.U,
       Age.U,
@@ -142,8 +118,28 @@ export class AnimalObservationComponent implements OnInit {
       ''
     );
     // TODO append to the selected group. To do this need to create the selection.
-    this.group1.observations.push(observation);
-    console.log(this.selectedObservation);
+    this.activeGroup.groupMembers.push(observation);
+  }
+
+  addGroup(): void {
+    const groupId = uuid();
+    const observationActionId = uuid(); // TODO this should be the observation action id that is generated when entering this page.
+    const observation = new AnimalObservation(
+      uuid(),
+      observationActionId,
+      groupId,
+      [],
+      Sex.U,
+      Age.U,
+      PregnancyGrade.EMPTY,
+      ''
+    );
+    const group = new AnimalGroup(
+      groupId,
+      '',
+      [observation]
+    );
+    this.groups.push(group);
   }
 
   stopObservingAnimals() {
@@ -155,16 +151,32 @@ export class AnimalObservationComponent implements OnInit {
   }
 
   getSelectedObservation() {
-    if (this.selectedObservation) {
-      return this.selectedObservation;
+    if (!this.selectedObservation) {
+      this.selectedObservation = this.observations.filter(obs => obs.animalGroupId === this.activeGroup.id)[0];
+      if (!this.selectedObservation) {
+        this.selectedObservation = this.activeGroup.groupMembers[0];
+      }
     }
-    this.selectedObservation = this.observations[0];
     return this.selectedObservation;
   }
 
-  onSelected(selectedObservation: AnimalObservation) {
+  onObservationSelected(selectedObservation: AnimalObservation) {
     if (selectedObservation.id !== this.selectedObservation.id) {
       this.selectedObservation = selectedObservation;
     }
+    this.activeGroup = this.groups.find(group => group.id === selectedObservation.animalGroupId);
+  }
+
+  onGroupSelected(selectedGroup: AnimalGroup) {
+    if (this.selectedGroups.find(group => group.id === selectedGroup.id)) {
+      this.selectedGroups.splice(this.selectedGroups.findIndex(group => group.id === selectedGroup.id), 1);
+      if (this.selectedGroups) {
+        this.activeGroup = this.groups[0];
+      }
+
+    } else {
+      this.selectedGroups.push(selectedGroup);
+    }
+    this.activeGroup = selectedGroup;
   }
 }

@@ -6,6 +6,7 @@ import {ImageDescription} from './image-description';
 export class AnimalObservation {
   id: string;
   observationActionId: string;
+  animalGroupId: string;
   imageIds: ImageDescription[];
   sex: Sex;
   age: Age;
@@ -15,6 +16,7 @@ export class AnimalObservation {
   constructor(
     id: string,
     observationActionId: string,
+    animalGroupId: string,
     imageIds: ImageDescription[],
     sex: Sex,
     age: Age,
@@ -23,6 +25,7 @@ export class AnimalObservation {
   ) {
     this.id = id;
     this.observationActionId = observationActionId;
+    this.animalGroupId = animalGroupId;
     this.imageIds = imageIds;
     this.sex = sex;
     this.age = age;

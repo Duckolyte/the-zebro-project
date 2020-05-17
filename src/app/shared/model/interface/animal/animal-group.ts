@@ -1,7 +1,14 @@
-import {Animal} from '../../../../animal-observations/model/animal';
+import {AnimalObservation} from '../../../../animal-observations/model/animal-observation';
 
-export interface AnimalGroup {
+export class AnimalGroup {
   id: string;
   groupName: string;
-  groupMembers: Animal[];
+  groupMembers: AnimalObservation[];
+
+
+  constructor(id: string, groupName: string, groupMembers: AnimalObservation[]) {
+    this.id = id;
+    this.groupName = groupName;
+    this.groupMembers = groupMembers;
+  }
 }

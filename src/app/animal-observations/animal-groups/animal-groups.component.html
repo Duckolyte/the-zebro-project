@@ -1,12 +1,12 @@
-<mat-chip-list #chipList aria-label="">
-  <mat-chip *ngFor="let group of groups" [selectable]="selectable"
-            [removable]="removable" (removed)="remove(description.imageTag)">
-    {{description.imageTag}}
-    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-  </mat-chip>
-  <input placeholder="New ..."
-         [matChipInputFor]="chipList"
-         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-         [matChipInputAddOnBlur]="addOnBlur"
-         (matChipInputTokenEnd)="add($event)">
-</mat-chip-list>
+<mat-list>
+  <div mat-subheader>All Animal Groups</div>
+  <mat-list-item *ngFor="let group of groups" (click)="selectGroup(group)">
+
+    <mat-form-field>
+      <mat-label>Group Name</mat-label>
+      <input matInput placeholder="" [(ngModel)]="group.groupName">
+    </mat-form-field>
+
+  </mat-list-item>
+</mat-list>
+
