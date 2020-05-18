@@ -70,6 +70,7 @@ export class AnimalObservationComponent implements OnInit {
     PregnancyGrade.EVENTUALLY_PREGNANT,
     'Animal Two'
   );
+
   private obs3: AnimalObservation = new AnimalObservation(
     uuid(),
     uuid(),
@@ -89,8 +90,8 @@ export class AnimalObservationComponent implements OnInit {
 
   private observations: AnimalObservation[] = [this.obs1, this.obs2, this.obs3];
 
-  private group1: AnimalGroup = {id: uuid(), groupName: 'Group 1', groupMembers: [this.obs1, this.obs2]};
-  private group2: AnimalGroup = {id: uuid(), groupName: 'Group 2', groupMembers: [this.obs3]};
+  private group1: AnimalGroup = {id: this.obs1and2GroupId, groupName: 'Group 1', groupMembers: [this.obs1, this.obs2]};
+  private group2: AnimalGroup = {id: this.obs3GroupId, groupName: 'Group 2', groupMembers: [this.obs3]};
 
   private groups: AnimalGroup[] = [this.group1, this.group2];
 
@@ -107,18 +108,20 @@ export class AnimalObservationComponent implements OnInit {
   }
 
   addObservation(): void {
-    const observation = new AnimalObservation(
-      uuid(),
-      uuid(),
-      this.activeGroup.id,
-      [],
-      Sex.U,
-      Age.U,
-      PregnancyGrade.EMPTY,
-      ''
-    );
-    // TODO append to the selected group. To do this need to create the selection.
-    this.activeGroup.groupMembers.push(observation);
+    if (this.activeGroup) {
+      const observation = new AnimalObservation(
+        uuid(),
+        uuid(),
+        this.activeGroup.id,
+        [],
+        Sex.U,
+        Age.U,
+        PregnancyGrade.EMPTY,
+        ''
+      );
+      // TODO append to the selected group. To do this need to create the selection.
+      this.activeGroup.groupMembers.push(observation);
+    }
   }
 
   addGroup(): void {
@@ -173,7 +176,6 @@ export class AnimalObservationComponent implements OnInit {
       if (this.selectedGroups) {
         this.activeGroup = this.groups[0];
       }
-
     } else {
       this.selectedGroups.push(selectedGroup);
     }
