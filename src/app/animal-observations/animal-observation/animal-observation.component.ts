@@ -6,8 +6,16 @@ import {v4 as uuid} from 'uuid';
 import {Sex} from '../model/sex.enum';
 import {Age} from '../model/age.enum';
 import {PregnancyGrade} from '../model/pregnancy-grade.enum';
-import {AnimalSide} from '../model/animal-side.enum';
 import {AnimalGroup} from '../../shared/model/interface/animal/animal-group';
+import {Observable} from 'rxjs';
+import {SelectionContext} from '../../shared/model/common/selection-context';
+import {select, Store} from '@ngrx/store';
+import * as fromSelectionContext from '../../shared/selection-context/selection-context.selectors';
+import * as fromMissionsReducers from '../../missions/mission.reducers';
+import {ObservationAction} from '../../observation-actions/model/observation-action';
+import {CreateObservation} from '../../observation-actions/observation-action.actions';
+import {CreateAnimalObservation} from '../animal-observation.actions';
+import {UpdateSelectionContext} from '../../shared/selection-context/selection-context.actions';
 
 @Component({
   selector: 'app-animal-observation',
@@ -20,91 +28,39 @@ export class AnimalObservationComponent implements OnInit {
 
   private showDetails = false;
 
-  private obs1and2GroupId = uuid();
-  private obs3GroupId = uuid();
+  selectionContext$: Observable<SelectionContext[]> = this.store.pipe(select(fromSelectionContext.selectSelectionContext));
+  private selectedMissionId;
 
-  private obs1: AnimalObservation = new AnimalObservation(
-    uuid(),
-    uuid(),
-    this.obs1and2GroupId,
-    [
-      {
-        id: uuid(),
-        imageTag: 1,
-        animalSide: AnimalSide.LEFT
-      },
-      {
-        id: uuid(),
-        imageTag: 2,
-        animalSide: AnimalSide.RIGHT
-      },
-      {
-        id: uuid(),
-        imageTag: 3,
-        animalSide: AnimalSide.LEFT
-      }
-    ],
-    Sex.F,
-    Age.A,
-    PregnancyGrade.PREGNANT,
-    'Animal One'
-  );
-  private obs2: AnimalObservation = new AnimalObservation(
-    uuid(),
-    uuid(),
-    this.obs1and2GroupId,
-    [
-      {
-        id: uuid(),
-        imageTag: 22,
-        animalSide: AnimalSide.RIGHT
-      },
-      {
-        id: uuid(),
-        imageTag: 23,
-        animalSide: AnimalSide.LEFT
-      }
-    ],
-    Sex.F,
-    Age.SA,
-    PregnancyGrade.EVENTUALLY_PREGNANT,
-    'Animal Two'
-  );
+  private observationAction: ObservationAction;
 
-  private obs3: AnimalObservation = new AnimalObservation(
-    uuid(),
-    uuid(),
-    this.obs3GroupId,
-    [
-      {
-        id: uuid(),
-        imageTag: 311,
-        animalSide: AnimalSide.RIGHT
-      }
-    ],
-    Sex.M,
-    Age.F,
-    PregnancyGrade.NOT_PREGNANT,
-    'Animal Three'
-  );
-
-  private observations: AnimalObservation[] = [this.obs1, this.obs2, this.obs3];
-
-  private group1: AnimalGroup = {id: this.obs1and2GroupId, groupName: 'Group 1', groupMembers: [this.obs1, this.obs2]};
-  private group2: AnimalGroup = {id: this.obs3GroupId, groupName: 'Group 2', groupMembers: [this.obs3]};
-
-  private groups: AnimalGroup[] = [this.group1, this.group2];
+  private observations: AnimalObservation[] = [];
+  private groups: AnimalGroup[] = [];
 
   private selectedObservation: AnimalObservation;
   private selectedGroups: AnimalGroup[] = [];
   private activeGroup: AnimalGroup;
 
   constructor(
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private store: Store<fromMissionsReducers.State>
   ) {
   }
 
   ngOnInit() {
+    this.selectionContext$.subscribe(selectionContext => {
+      this.selectedMissionId = selectionContext[0].selectedMissionId;
+    });
+
+    this.observationAction = new ObservationAction(
+      uuid(),
+      this.selectedMissionId
+    );
+
+    this.store.dispatch(new CreateObservation(this.observationAction));
+    this.store.dispatch(new UpdateSelectionContext(
+      '1',
+      {selectedObservationId: this.observationAction.id}
+    ));
   }
 
   addObservation(): void {
@@ -119,17 +75,16 @@ export class AnimalObservationComponent implements OnInit {
         PregnancyGrade.EMPTY,
         ''
       );
-      // TODO append to the selected group. To do this need to create the selection.
+      this.observations.push(observation);
       this.activeGroup.groupMembers.push(observation);
     }
   }
 
   addGroup(): void {
     const groupId = uuid();
-    const observationActionId = uuid(); // TODO this should be the observation action id that is generated when entering this page.
     const observation = new AnimalObservation(
       uuid(),
-      observationActionId,
+      this.observationAction.id,
       groupId,
       [],
       Sex.U,
@@ -142,14 +97,14 @@ export class AnimalObservationComponent implements OnInit {
       '',
       [observation]
     );
+    this.observations.push(observation);
     this.groups.push(group);
   }
 
   stopObservingAnimals() {
-    //  @TODO
-    // in this component there is inserted the observationAction compnent which must be created when start observation from the missions
-    // component. Update the animalObservations list in the components observation action and then redirect to observation-action.
-    console.log(`Redirecting to observation-action`);
+    for (const observation of this.observations) {
+      this.store.dispatch(new CreateAnimalObservation(observation));
+    }
     this.navigationService.navigateTo('observation-action');
   }
 
