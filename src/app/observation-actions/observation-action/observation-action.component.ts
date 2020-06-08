@@ -21,7 +21,7 @@ import {GpsPoint} from '../../shared/model/common/gps-point';
 export class ObservationActionComponent implements OnInit {
 
   // UI configuration
-  private observationQualityCodeToggleButtonGroup = {
+  observationQualityCodeToggleButtonGroup = {
     nestedButtons: [
       {value: ObservationQualityCode.A},
       {value: ObservationQualityCode.B},
@@ -29,7 +29,7 @@ export class ObservationActionComponent implements OnInit {
       {value: ObservationQualityCode.D},
     ]
   };
-  private commitObservationActionButton = {
+  commitObservationActionButton = {
     buttonType: 'RedirectionButton',
     buttonProps: {
       url: 'mission'
@@ -38,16 +38,16 @@ export class ObservationActionComponent implements OnInit {
 
   // Component properties
   private observationAction$: Observable<ObservationAction>;
-  private observationAction: ObservationAction;
+  observationAction: ObservationAction;
 
   private observations$: Observable<AnimalObservation[]>;
-  private observations: AnimalObservation[];
-  private observationsCount: number;
+  observations: AnimalObservation[];
+  observationsCount: number;
 
-  private gps: GpsPoint;
+  gps: GpsPoint;
 
   selectionContext$: Observable<SelectionContext[]> = this.store.pipe(select(fromSelectionContext.selectSelectionContext));
-  private selectedObservationId;
+  selectedObservationId;
 
   constructor(
     private navigationService: NavigationService,

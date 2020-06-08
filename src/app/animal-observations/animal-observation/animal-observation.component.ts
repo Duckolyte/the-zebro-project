@@ -26,19 +26,19 @@ import {UpdateSelectionContext} from '../../shared/selection-context/selection-c
 
 export class AnimalObservationComponent implements OnInit {
 
-  private showDetails = false;
+  showDetails = false;
 
-  selectionContext$: Observable<SelectionContext[]> = this.store.pipe(select(fromSelectionContext.selectSelectionContext));
-  private selectedMissionId;
+  private selectionContext$: Observable<SelectionContext[]> = this.store.pipe(select(fromSelectionContext.selectSelectionContext));
+  selectedMissionId;
 
-  private observationAction: ObservationAction;
+  observationAction: ObservationAction;
 
-  private observations: AnimalObservation[] = [];
-  private groups: AnimalGroup[] = [];
+  observations: AnimalObservation[] = [];
+  groups: AnimalGroup[] = [];
 
-  private selectedObservation: AnimalObservation;
-  private selectedGroups: AnimalGroup[] = [];
-  private activeGroup: AnimalGroup;
+  selectedObservation: AnimalObservation;
+  selectedGroups: AnimalGroup[] = [];
+  activeGroup: AnimalGroup;
 
   constructor(
     private navigationService: NavigationService,

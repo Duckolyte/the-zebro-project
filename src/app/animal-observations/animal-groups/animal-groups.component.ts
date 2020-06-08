@@ -14,7 +14,7 @@ export class AnimalGroupsComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   @Input()
-  private groups: AnimalGroup[];
+  groups: AnimalGroup[];
 
   @Output()
   groupSelected = new EventEmitter<AnimalGroup>();

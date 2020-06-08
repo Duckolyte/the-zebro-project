@@ -25,7 +25,7 @@ export class ObservationRowComponent implements OnInit {
   selectedObservationRow: AnimalObservation;
 
   @Input()
-  private observation: AnimalObservation;
+  observation: AnimalObservation;
 
   @Output()
   selected = new EventEmitter<AnimalObservation>();

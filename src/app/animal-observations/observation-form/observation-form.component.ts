@@ -25,7 +25,7 @@ export class ObservationFormComponent implements OnInit {
   readonly leftSide = AnimalSide.LEFT;
 
   @Input()
-  private observation: AnimalObservation;
+  observation: AnimalObservation;
   imageRightIds: ImageId[] = [];
   imageLeftIds: ImageId[] = [];
 

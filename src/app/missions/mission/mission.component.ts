@@ -22,19 +22,19 @@ import * as fromSelectionContext from '../../shared/selection-context/selection-
 export class MissionComponent implements OnInit {
 
   // UI configuration
-  private parcSectionToggleButtonGroup = {
+  parcSectionToggleButtonGroup = {
     nestedButtons: [
       {value: ParcSection.H},
       {value: ParcSection.M}
     ]
   };
-  private commitMissionButton = {
+  commitMissionButton = {
     buttonType: 'RedirectionButton',
     buttonProps: {
       url: 'mission'
     }
   };
-  private createObservationButton = {
+  createObservationButton = {
     buttonType: 'RedirectionButton',
     buttonProps: {
       url: 'animal-observation'
@@ -43,9 +43,9 @@ export class MissionComponent implements OnInit {
 
   // Component properties
   private observationMission$: Observable<ObservationMission>;
-  private observationMission: ObservationMission;
+  observationMission: ObservationMission;
   private selectionContext$: Observable<SelectionContext[]> = this.store.pipe(select(fromSelectionContext.selectSelectionContext));
-  private selectedMissionId: string;
+  selectedMissionId: string;
 
   constructor(
     private navigationService: NavigationService,

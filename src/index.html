@@ -14,5 +14,25 @@
 <body>
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+       https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+          apiKey: "AIzaSyAqCUQipDveoJaRc_2dWZSwMFUmGgkLaDc",
+          authDomain: "the-zebro-project.firebaseapp.com",
+          databaseURL: "https://the-zebro-project.firebaseio.com",
+          projectId: "the-zebro-project",
+          storageBucket: "the-zebro-project.appspot.com",
+          messagingSenderId: "349248582847",
+          appId: "1:349248582847:web:76c29dba0bfb25af8e420a"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+  </script>
 </body>
 </html>
