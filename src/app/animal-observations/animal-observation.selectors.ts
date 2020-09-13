@@ -1,11 +1,12 @@
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import * as fromAnimalObservation from './animal-observation.reducers';
 
+
 export const getAnimalObservationState = createFeatureSelector<fromAnimalObservation.State>('animalObservations');
 
 export const selectAnimalObservationById = (animalObservationId: string) => createSelector(
   getAnimalObservationState,
-  missionsState => missionsState.entities[animalObservationId]
+  animalObservationState => animalObservationState.entities[animalObservationId]
 );
 
 export const selectFirstAnimalObservation = createSelector(

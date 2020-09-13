@@ -1,6 +1,7 @@
 export enum ObservationQualityCode {
-  'A',
-  'B',
-  'C',
-  'D'
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D',
+  U = 'undefined'
 }

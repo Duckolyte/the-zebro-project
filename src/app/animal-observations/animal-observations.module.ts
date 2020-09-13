@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule, Pipe, PipeTransform} from '@angular/core';
 import { AnimalObservationComponent } from './animal-observation/animal-observation.component';
 
 import { CommonModule } from '@angular/common';
@@ -10,17 +10,19 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
   MatButtonModule,
   MatButtonToggleModule,
-  MatCardModule,
+  MatCardModule, MatChipsModule,
   MatDatepickerModule, MatDividerModule,
   MatFormFieldModule,
-  MatGridListModule,
-  MatInputModule,
-  MatNativeDateModule, MatSnackBarModule
+  MatGridListModule, MatIconModule,
+  MatInputModule, MatListModule,
+  MatNativeDateModule, MatSidenavModule, MatSnackBarModule
 } from '@angular/material';
-
+import { ObservationRowComponent } from './observation-row/observation-row.component';
+import { ObservationFormComponent } from './observation-form/observation-form.component';
+import { AnimalGroupsComponent } from './animal-groups/animal-groups.component';
 
 @NgModule({
-  declarations: [AnimalObservationComponent],
+  declarations: [AnimalObservationComponent, ObservationRowComponent, ObservationFormComponent, AnimalGroupsComponent],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
@@ -36,7 +38,11 @@ import {
     MatButtonModule,
     MatDividerModule,
     MatSnackBarModule,
-    StoreModule.forFeature('animalObservations', animalObservationReducer)
+    StoreModule.forFeature('animalObservations', animalObservationReducer),
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatChipsModule
   ]
 })
 

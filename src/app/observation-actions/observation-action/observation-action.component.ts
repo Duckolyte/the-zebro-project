@@ -3,18 +3,15 @@ import {ObservationQualityCode} from '../model/observation-quality-code.enum';
 import {ObservationAction} from '../model/observation-action';
 import {NavigationService} from '../../shared/service/navigation.service';
 import {select, Store} from '@ngrx/store';
-import {AppState} from '../../shared/app-store';
-import {CreateObservation} from '../observation-action.actions';
-import {v4 as uuid} from 'uuid';
-import {selectionContextAdapter} from '../../shared/selection-context/selection-context.reducers';
-import {first, tap} from 'rxjs/operators';
+import {UpdateObservation} from '../observation-action.actions';
 import * as fromMissionsReducers from '../../missions/mission.reducers';
-import * as fromMissionsSelectors from '../../missions/mission.selectors';
 import * as fromSelectionContext from '../../shared/selection-context/selection-context.selectors';
 import {AnimalObservation} from '../../animal-observations/model/animal-observation';
-import {ObservationMission} from '../../missions/model/observation-mission';
 import {Observable} from 'rxjs';
 import {SelectionContext} from '../../shared/model/common/selection-context';
+import * as fromObservationAction from '../../observation-actions/observation-action.selectors';
+import * as fromAnimalObservation from '../../animal-observations/animal-observation.selectors';
+import {GpsPoint} from '../../shared/model/common/gps-point';
 
 @Component({
   selector: 'app-observation-action',
@@ -24,15 +21,15 @@ import {SelectionContext} from '../../shared/model/common/selection-context';
 export class ObservationActionComponent implements OnInit {
 
   // UI configuration
-  private observationQualityCodeToggleButtonGroup = {
+  observationQualityCodeToggleButtonGroup = {
     nestedButtons: [
-      {value: ObservationQualityCode[0]},
-      {value: ObservationQualityCode[1]},
-      {value: ObservationQualityCode[2]},
-      {value: ObservationQualityCode[3]},
+      {value: ObservationQualityCode.A},
+      {value: ObservationQualityCode.B},
+      {value: ObservationQualityCode.C},
+      {value: ObservationQualityCode.D},
     ]
   };
-  private commitObservationActionButton = {
+  commitObservationActionButton = {
     buttonType: 'RedirectionButton',
     buttonProps: {
       url: 'mission'
@@ -40,12 +37,17 @@ export class ObservationActionComponent implements OnInit {
   };
 
   // Component properties
-  private observationAction: ObservationAction;
-  private observations: AnimalObservation[];
+  private observationAction$: Observable<ObservationAction>;
+  observationAction: ObservationAction;
 
-  // TODO there should be a possibility to select the mission id directly instead of the selectioncontext first then selectedMissionId
+  private observations$: Observable<AnimalObservation[]>;
+  observations: AnimalObservation[];
+  observationsCount: number;
+
+  gps: GpsPoint;
+
   selectionContext$: Observable<SelectionContext[]> = this.store.pipe(select(fromSelectionContext.selectSelectionContext));
-  private selectedMissionId;
+  selectedObservationId;
 
   constructor(
     private navigationService: NavigationService,
@@ -54,22 +56,31 @@ export class ObservationActionComponent implements OnInit {
   }
 
   ngOnInit() {
-    // @TODO
-    // Load observations by Id.
-    this.observations = [];
-
     this.selectionContext$.subscribe(selectionContext => {
-      this.selectedMissionId = selectionContext[0].selectedMissionId;
+      this.selectedObservationId = selectionContext[0].selectedObservationId;
     });
 
-    this.observationAction = new ObservationAction(
-      uuid(),
-      this.selectedMissionId
-    );
+    this.observationAction$ = this.store.pipe(select(fromObservationAction.selectObservationById(this.selectedObservationId)));
+    this.observationAction$.subscribe(observation => {
+      this.observationAction = Object.assign({}, observation);
+    });
+
+    this.observationAction$.subscribe(observation => {
+      this.gps = Object.assign({}, observation.gps);
+    });
+
+    this.observations$ = this.store.pipe(select(fromAnimalObservation.selectAllAnimalObservations));
+    this.observations$.subscribe(observations => {
+      this.observations = Object.assign({}, observations);
+    });
+    if (this.observations) {
+      this.observationsCount = Object.keys(this.observations).length;
+    }
   }
 
   commitObservationAction() {
-    this.store.dispatch(new CreateObservation(this.observationAction));
+    this.observationAction.gps = this.gps;
+    this.store.dispatch(new UpdateObservation(this.observationAction.id, this.observationAction));
     this.navigationService.navigateTo('mission');
   }
 }

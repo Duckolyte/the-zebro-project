@@ -1,13 +1,58 @@
-<div>
-  <mat-grid-list cols="1" rowHeight="5:1">
-    <mat-grid-tile></mat-grid-tile>
-    <mat-grid-tile>
-      <button
-        mat-stroked-button
-        (click)="stopObservingAnimals()"
-      >
-        Start Observation
-      </button>
-    </mat-grid-tile>
-  </mat-grid-list>
-</div>
+<mat-drawer-container class="example-container" autosize>
+  <div>
+    <button type="button" mat-button (click)="drawer.toggle()">
+      >>>
+    </button>
+  </div>
+
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+
+    <h4>Selected Groups</h4>
+    <button (click)="addObservation()" mat-raised-button>
+      +
+    </button>
+    <button (click)="showDetails = !showDetails" mat-raised-button style="margin-left: 5px;">
+      Toggle Details
+    </button>
+
+    <!-- TODO all the chip lists should be extracted into a separated generic component chip-list in the shared folder -->
+
+    <mat-list>
+      <ng-container *ngFor="let group of selectedGroups">
+        <div mat-subheader>{{group.groupName}}</div>
+        <mat-list-item *ngFor="let obs of group.groupMembers">
+          <app-observation-row [showDetails]="showDetails" [observation]="obs" (selected)="onObservationSelected($event)">
+          </app-observation-row>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </mat-list>
+
+
+    <h4>All Groups</h4>
+    <button (click)="addGroup()" mat-raised-button>
+      +
+    </button>
+    <app-animal-groups [groups]="groups" (groupSelected)="onGroupSelected($event)"></app-animal-groups>
+
+  </mat-drawer>
+
+  <div *ngIf="selectedGroups.length; else selectGroupHint" class="observation-form-container">
+      <app-observation-form [observation]="getSelectedObservation()"></app-observation-form>
+      <div class="navigation-button-container">
+        <button
+          mat-stroked-button
+          (click)="stopObservingAnimals()"
+        >
+          Stop Observation
+        </button>
+      </div>
+  </div>
+
+  <ng-template #selectGroupHint>
+    <div class="observation-form-container">
+      <h2>Select a group to start your work. If there is no group already. Create a new one.</h2>
+    </div>
+  </ng-template>
+
+</mat-drawer-container>

@@ -1,0 +1,53 @@
+<mat-list-item (click)="selectObservationRow($event)">
+
+  <ng-container *ngIf="!showDetails">
+      <mat-chip-list #chipList aria-label="">
+        <ng-container *ngIf="observation.imageIds.length < 4; else shrinkIds">
+          <mat-chip *ngFor="let description of observation.imageIds" [selectable]="selectable"
+                    [removable]="removable" (removed)="remove(description.imageTag)">
+            {{description.imageTag}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </ng-container>
+        <ng-template #shrinkIds>
+          <mat-chip [selectable]="selectable" [removable]="removable"  (removed)="remove(observation.imageIds[0].imageTag)">
+            {{observation.imageIds[0].imageTag}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          ...
+          <mat-chip [selectable]="selectable" [removable]="removable" (removed)="remove(observation.imageIds[observation.imageIds.length - 1].imageTag)">
+            {{observation.imageIds[observation.imageIds.length - 1].imageTag}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </ng-template>
+        <input placeholder="New ..."
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="add($event)">
+      </mat-chip-list>
+  </ng-container>
+
+  <ng-container *ngIf="showDetails">
+    <mat-form-field>
+      <mat-label>Age</mat-label>
+      <input matInput placeholder="" [(ngModel)]="observation.age">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Sex</mat-label>
+      <input matInput placeholder="" [(ngModel)]="observation.sex">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Pregnancy Grade</mat-label>
+      <input matInput placeholder="" [(ngModel)]="observation.pregnancyGrade">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Animal Name</mat-label>
+      <input matInput placeholder="" [(ngModel)]="observation.animalName">
+    </mat-form-field>
+  </ng-container>
+
+</mat-list-item>

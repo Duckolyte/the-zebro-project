@@ -1,0 +1,57 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Observation</mat-card-title>
+    <mat-card-subtitle>Images</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field class="expand-width">
+      <mat-chip-list #chipListRight aria-label="">
+        <mat-chip *ngFor="let description of getAnimalSideImageTags(rightSide)" [selectable]="selectable"
+                  [removable]="removable" (removed)="remove(description.imageTag)">
+          {{description.imageTag}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New right image..."
+               [matChipInputFor]="chipListRight"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="add($event, rightSide)">
+      </mat-chip-list>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="expand-width">
+      <mat-chip-list #chipListLeft aria-label="">
+        <mat-chip *ngFor="let description of getAnimalSideImageTags(leftSide)" [selectable]="selectable"
+                  [removable]="removable" (removed)="remove(description.imageTag)">
+          {{description.imageTag}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="New left image..."
+               [matChipInputFor]="chipListLeft"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="add($event, leftSide)">
+      </mat-chip-list>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Age</mat-label>
+      <input matInput placeholder="Age" [(ngModel)]="observation.age">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Sex</mat-label>
+      <input matInput placeholder="Sex" [(ngModel)]="observation.sex">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Pregnancy Grade</mat-label>
+      <input matInput placeholder="Pregnancy Grade" [(ngModel)]="observation.pregnancyGrade">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Animal Name</mat-label>
+      <input matInput placeholder="Animal Name" [(ngModel)]="observation.animalName">
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>

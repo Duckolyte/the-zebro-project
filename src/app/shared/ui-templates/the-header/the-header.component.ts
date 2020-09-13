@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import {Store} from '@ngrx/store';
-import {AppState} from '../../app-store';
-import {UpdateSelectionContext} from '../../selection-context/selection-context.actions';
+import {Component, OnInit} from '@angular/core';
 import {NavigationService} from '../../service/navigation.service';
 
 @Component({
@@ -11,8 +8,8 @@ import {NavigationService} from '../../service/navigation.service';
 })
 export class TheHeaderComponent implements OnInit {
 
-  private titleSectionOne = 'Project';
-  private titleSectionTwo = 'Zebro';
+  titleSectionOne = 'Project';
+  titleSectionTwo = 'Zebro';
 
   constructor(
     private  navigationService: NavigationService

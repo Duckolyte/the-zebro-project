@@ -22,19 +22,19 @@ import * as fromSelectionContext from '../../shared/selection-context/selection-
 export class MissionComponent implements OnInit {
 
   // UI configuration
-  private parcSectionToggleButtonGroup = {
+  parcSectionToggleButtonGroup = {
     nestedButtons: [
       {value: ParcSection.H},
       {value: ParcSection.M}
     ]
   };
-  private commitMissionButton = {
+  commitMissionButton = {
     buttonType: 'RedirectionButton',
     buttonProps: {
       url: 'mission'
     }
   };
-  private createObservationButton = {
+  createObservationButton = {
     buttonType: 'RedirectionButton',
     buttonProps: {
       url: 'animal-observation'
@@ -43,9 +43,9 @@ export class MissionComponent implements OnInit {
 
   // Component properties
   private observationMission$: Observable<ObservationMission>;
-  private observationMission: ObservationMission;
+  observationMission: ObservationMission;
   private selectionContext$: Observable<SelectionContext[]> = this.store.pipe(select(fromSelectionContext.selectSelectionContext));
-  private selectedMissionId: string;
+  selectedMissionId: string;
 
   constructor(
     private navigationService: NavigationService,
@@ -59,17 +59,14 @@ export class MissionComponent implements OnInit {
     this.selectionContext$.subscribe(selectionContext => {
       this.selectedMissionId = selectionContext[0] ? selectionContext[0].selectedMissionId : undefined;
     });
-    console.log(this.selectedMissionId);
     if (this.selectedMissionId) {
       // TODO below code duplication spot 1
       this.observationMission$ = this.store.pipe(select(fromMissions.selectMissionById(this.selectedMissionId)));
       this.observationMission$.subscribe(mission => {
-        console.log(mission);
         this.observationMission = Object.assign({}, mission);
       });
       // code duplication spot 1 end
     }
-    console.log(this.observationMission);
     if (!this.observationMission) {
       const observationMission = new ObservationMission(
         uuid()
@@ -78,7 +75,6 @@ export class MissionComponent implements OnInit {
       // TODO below code duplication spot 2
       this.observationMission$ = this.store.pipe(select(fromMissions.selectMissionById(observationMission.id)));
       this.observationMission$.subscribe(mission => {
-        console.log(mission);
         this.observationMission = Object.assign({}, mission);
       });
       // code duplication spot 2 end
