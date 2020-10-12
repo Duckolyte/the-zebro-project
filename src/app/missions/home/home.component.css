@@ -1,3 +1,14 @@
+mat-grid-tile.logo-bg {
+  height: 10%;
+  width: 30%;
+  background-image: url("/assets/img/park-2.jpg");
+}
+
+mat-grid-tile.footer {
+  background: darkblue;
+  color: white;
+}
+
 #nestedGrid {
   min-width: 80%;
 }
