@@ -1,0 +1,22 @@
+@import './zebro-theme.scss';
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+/* Global styles for zebro forms */
+
+.observation-form-container {
+  margin: 5% 10%;
+}
+
+.navigation-button-container {
+  text-align: center;
+  padding: 5%;
+}
